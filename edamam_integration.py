@@ -10,7 +10,7 @@ load_dotenv()
 EDAMAM_APP_ID = os.getenv('EDAMAM_APP_ID')
 EDAMAM_APP_KEY = os.getenv('EDAMAM_APP_KEY')
 
-# print(f"{EDAMAM_APP_ID}, {EDAMAM_APP_KEY}")
+
 def get_recipe(dish):
     EDAMAM_URL = "https://api.edamam.com/api/recipes/v2"
 
