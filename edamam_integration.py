@@ -1,28 +1,29 @@
-import dotenv
 import json
-import os
 import requests
 
-from dotenv import load_dotenv
 
-load_dotenv()
-
-EDAMAM_APP_ID = os.getenv('EDAMAM_APP_ID')
-EDAMAM_APP_KEY = os.getenv('EDAMAM_APP_KEY')
-
-
-def get_recipe(dish):
+def get_recipe(app_id, app_key, dish):
     EDAMAM_URL = "https://api.edamam.com/api/recipes/v2"
 
     auth_response = requests.get(EDAMAM_URL, {
         'type': 'public',
         'q': dish,
-        'app_id': EDAMAM_APP_ID,
-        'app_key': EDAMAM_APP_KEY,
+        'app_id': app_id,
+        'app_key': app_key,
     })
 
-    # print(auth_response.json())
-    with open('data.json', 'w', encoding='utf-8') as f:
-        json.dump(auth_response.json(), f, ensure_ascii=False, indent=4)
+    # # print(auth_response.json())
+    # with open('data.json', 'w', encoding='utf-8') as f:
+    #     json.dump(auth_response.json(), f, ensure_ascii=False, indent=4)
 
-    return dish
+    # return dish
+
+    recipe = auth_response.json()['hits'][0]['recipe']
+    recipe_name = recipe['label']
+    ingredient_lines = recipe['ingredientLines']
+
+    recipe_details = recipe_name
+    for ingredient in ingredient_lines:
+        recipe_details += f"\n{ingredient}"
+
+    return recipe_details
