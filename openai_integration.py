@@ -11,7 +11,11 @@ def alt_recipe_query(key, diet, recipe):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": f"You are a skilled dietian who can provide any type of cooking recipes and alternatives for different diets. I am looking to make the following recipe, with alternative ingredients that fit into a {diet} diet."},
+            {"role": "system", "content": 
+                "You are a skilled dietian who can provide any type of"
+                " cooking recipes and alternatives for different diets. "
+                "I am looking to make the following recipe, with alternative"
+                f" ingredients that fit into a {diet} diet."},
             {"role": "user", "content": recipe}
             # {"role": "user", "content": "What can I substitute beef in a Big Mac with as a vegan?"}
         ]
