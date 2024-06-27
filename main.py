@@ -2,8 +2,8 @@ import dotenv
 import os
 
 from dotenv import load_dotenv
-from edamam_integration import get_recipe
-from openai_integration import alt_recipe_query
+from api_integration.edamam_integration import get_recipe
+from api_integration.openai_integration import alt_recipe_query
 
 # Importing env variables for API authentication
 load_dotenv()
@@ -41,11 +41,13 @@ def make_recipe():
         " dish you would like to make: ")
 
     recipe_query = get_recipe(EDAMAM_APP_ID, EDAMAM_APP_KEY, requested_recipe)
-    print(f"\n{alt_recipe_query(OPENAI_KEY, diet, recipe_query)}\n") 
+    new_recipe = f"\n{alt_recipe_query(OPENAI_KEY, diet, recipe_query)}\n"
+    print(new_recipe)
 
 
 def lookup_prev_recipe():
     return True
+
 
 if __name__ == "__main__":
     main()
