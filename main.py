@@ -5,7 +5,10 @@ import os
 from dotenv import load_dotenv
 from api_integration.edamam_integration import get_recipe
 from api_integration.openai_integration import alt_recipe_query
-from db.recipe_sql import create_tables, store_original_recipe, store_alt_recipe, lookup_prev_recipe, reset_database
+from db.recipe_sql import (
+    create_tables, store_original_recipe, 
+    store_alt_recipe, lookup_prev_recipe, 
+    reset_database)
 
 # Importing env variables for API authentication
 load_dotenv()
@@ -49,7 +52,6 @@ def make_recipe():
     for ingredient in recipe_query['ingredients']:
         ingredients.append(ingredient)
     recipe_link = recipe_query['url']
-    
     store_original_recipe(original_name, ingredients, recipe_link)
     
     alt_recipe = alt_recipe_query(OPENAI_KEY, diet, recipe_query)
@@ -61,7 +63,6 @@ def make_recipe():
     store_alt_recipe(original_recipe_id, alt_name, alt_ingredients, alt_instructions)
 
     print(f"\nAlternative Recipe: {alt_name}\nIngredients: {', '.join(alt_ingredients)}\nInstructions: {alt_instructions}\n")
-
 
 
 def lookup_original_recipe_id(name, ingredients, recipe_link):
