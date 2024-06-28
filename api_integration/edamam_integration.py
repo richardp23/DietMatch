@@ -1,6 +1,8 @@
 import json
 import requests
 
+from db.recipe_sql import store_original_recipe
+
 
 def get_recipe(app_id, app_key, dish):
     EDAMAM_URL = "https://api.edamam.com/api/recipes/v2"
@@ -11,19 +13,27 @@ def get_recipe(app_id, app_key, dish):
         'app_id': app_id,
         'app_key': app_key,
     })
+    
+    auth_response.raise_for_status() 
 
-    # # print(auth_response.json())
-    # with open('data.json', 'w', encoding='utf-8') as f:
-    #     json.dump(auth_response.json(), f, ensure_ascii=False, indent=4)
 
-    # return dish
+    data = auth_response.json()
 
-    recipe = auth_response.json()['hits'][0]['recipe']
-    recipe_name = recipe['label']
-    ingredient_lines = recipe['ingredientLines']
+    if 'hits' in data and data['hits']:
+        recipe = data['hits'][0]['recipe']
+        recipe_name = recipe['label']
+        ingredient_lines = recipe['ingredientLines']
+        recipe_url = recipe['url']
 
-    recipe_details = recipe_name
-    for ingredient in ingredient_lines:
-        recipe_details += f"\n{ingredient}"
+        store_original_recipe(recipe_name, ingredient_lines, recipe_url)
 
-    return recipe_details
+        recipe_details = {
+            'name': recipe_name,
+            'ingredients': ingredient_lines,
+            'url': recipe_url
+        }
+
+        return recipe_details
+    else:
+        return None
+
