@@ -1,10 +1,9 @@
 import openai
 from openai import OpenAI
 
+
 def alt_recipe_query(key, diet, recipe_query):
-
     client = OpenAI(api_key=key)
-
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -40,7 +39,6 @@ def alt_recipe_query(key, diet, recipe_query):
             alt_ingredients = ['\n ' + line.strip() for line in ingredients_section.splitlines() if line.strip()]
             formatted_ingredients = ''.join(alt_ingredients)
 
-
         instructions_start = recipe_string.find("Instructions:") + len("Instructions:")
         if instructions_start != -1:
             instructions_section = recipe_string[instructions_start:].strip()
@@ -58,7 +56,6 @@ def alt_recipe_query(key, diet, recipe_query):
                     formatted_instructions[-1] += " " + line.strip()  
     
             alt_instructions = "\n" + "\n".join(formatted_instructions)
-
 
         return alt_name, alt_ingredients, alt_instructions
 

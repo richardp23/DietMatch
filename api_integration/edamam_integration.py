@@ -1,8 +1,6 @@
 import json
 import requests
 
-# from db.recipe_sql import store_original_recipe
-
 
 def get_recipe(app_id, app_key, dish):
     EDAMAM_URL = "https://api.edamam.com/api/recipes/v2"
@@ -24,8 +22,6 @@ def get_recipe(app_id, app_key, dish):
         recipe_name = recipe['label']
         ingredient_lines = recipe['ingredientLines']
         recipe_url = recipe['url']
-
-        # store_original_recipe(recipe_name, ingredient_lines, recipe_url)
 
         recipe_details = {
             'name': recipe_name,
