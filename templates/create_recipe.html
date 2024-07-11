@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Recipe - Diet Match</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Diet Match</div>
+        <nav>
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+            <a href="#" class="contact-us">Contact Us</a>
+        </nav>
+    </header>
+    <main class="create-recipe-main">
+        <div class="content-wrapper">
+            <section class="recipe-creation">
+                <h1>Create Your Recipe</h1>
+                <form id="recipe-form">
+                    <div class="form-group">
+                        <label for="diet-preference">Enter preferred diet:</label>
+                        <input type="text" id="diet-preference" name="diet-preference" placeholder="e.g., vegan, vegetarian">
+                    </div>
+                    <div class="form-group">
+                        <label for="original-recipe">Enter original recipe name:</label>
+                        <input type="text" id="original-recipe" name="original-recipe" placeholder="e.g., Spaghetti Bolognese">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="generate-recipe">Generate Recipe</button>
+                    </div>
+                </form>
+            </section>
+            <section class="recipe-result">
+                <h2>New Recipe</h2>
+                <div id="generated-recipe">
+                    <p>Your generated recipe will appear here.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
