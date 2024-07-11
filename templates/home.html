@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Match</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Diet Match</div>
+        <nav>
+            <a href="#" class="contact-us">Contact Us</a>
+        </nav>
+    </header>
+    <main>
+        <div class="content-wrapper">
+            <section class="left-column">
+                <h1>Recipes Customized <span>by You</span> Customized <span>for You</span></h1>
+                <p>Taking recipes that you know and love to a whole new personalized touch</p>
+                <div class="cta-buttons">
+                    <a href="{{ url_for('create_recipe') }}" class="create-recipe button">Create Recipe</a>
+                    <a href="#" class="recipe-lookup button">Recipe Lookup</a>
+                </div>
+                <div class="newsletter">
+                    <h2>Let's stay in touch!</h2>
+                    <form>
+                        <input type="email" placeholder="Enter your e-mail">
+                        <button type="submit">→</button>
+                    </form>
+                </div>
+            </section>
+            <section class="right-column">
+                <div class="recipe-gallery">
+                    <img src="{{ url_for('static', filename='placeholder1.jpg') }}" alt="Recipe 1" class="large">
+                    <img src="{{ url_for('static', filename='placeholder2.jpg') }}" alt="Recipe 2" class="small">
+                    <img src="{{ url_for('static', filename='placeholder3.jpg') }}" alt="Recipe 3" class="small">
+                    <img src="{{ url_for('static', filename='placeholder4.jpg') }}" alt="Recipe 4" class="medium">
+                    <img src="{{ url_for('static', filename='placeholder5.jpg') }}" alt="Recipe 5" class="medium">
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Match</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Diet Match</div>
+        <nav>
+            <a href="#" class="contact-us">Contact Us</a>
+        </nav>
+    </header>
+    <main>
+        <div class="content-wrapper">
+            <section class="left-column">
+                <h1>Recipes Customized <span>by You</span> Customized <span>for You</span></h1>
+                <p>Taking recipes that you know and love to a whole new personalized touch</p>
+                <div class="cta-buttons">
+                    <a href="{{ url_for('create_recipe') }}" class="create-recipe button">Create Recipe</a>
+                    <button class="recipe-lookup">Recipe Lookup</button>
+                </div>
+                <div class="newsletter">
+                    <h2>Let's stay in touch!</h2>
+                    <form>
+                        <input type="email" placeholder="Enter your e-mail">
+                        <button type="submit">→</button>
+                    </form>
+                </div>
+            </section>
+            <section class="right-column">
+                <div class="recipe-gallery">
+                    <img src="{{ url_for('static', filename='placeholder1.jpg') }}" alt="Recipe 1" class="large">
+                    <img src="{{ url_for('static', filename='placeholder2.jpg') }}" alt="Recipe 2" class="small">
+                    <img src="{{ url_for('static', filename='placeholder3.jpg') }}" alt="Recipe 3" class="small">
+                    <img src="{{ url_for('static', filename='placeholder4.jpg') }}" alt="Recipe 4" class="medium">
+                    <img src="{{ url_for('static', filename='placeholder5.jpg') }}" alt="Recipe 5" class="medium">
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html> -->
