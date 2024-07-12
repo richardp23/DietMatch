@@ -247,6 +247,57 @@ form button {
 }
 
 
+/* Existing styles... */
+
+/* Fix for the button on home page */
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.create-recipe {
+    background-color: #e76f51;
+    color: white;
+}
+
+.previous-recipes {
+    background-color: #f4d35e;
+    color: #333;
+}
+
+/* Styles for the Previous Recipes page */
+.previous-recipes-main {
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.previous-recipes-main h1 {
+    color: #2a9d8f;
+    margin-bottom: 30px;
+    font-size: 36px;
+}
+
+.recipe-container {
+    width: 60%;
+    height: 60vh; /* This will make it 60% of the viewport height */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
 
 
