@@ -22,7 +22,7 @@ def main(action, *args):
     elif action.lower() == "make":
         return make_recipe(args[0], args[1])
     elif action.lower() == "lookup":
-        lookup_db()
+        return lookup_db(args[0]) if args else lookup_db()
     elif action.lower() == "exit":
         exit()
     else:
@@ -63,9 +63,20 @@ def lookup_original_recipe_id(name, ingredients, recipe_link):
             raise ValueError("Original recipe not found in the database.")
 
 
-def lookup_db():
-    if lookup_prev_recipe():
-        select_recipe()
+def lookup_db(recipe_id = None):
+    if recipe_id:
+        return select_recipe(recipe_id)
+    else:
+        foundRecipes, recipes = lookup_prev_recipe()
+        if foundRecipes and __name__ == "__main__":
+            try:
+                recipe_id = int(input("Enter the ID of the recipe you want to view: "))
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+                return
+            select_recipe(recipe_id)
+        else:
+            return recipes
     
 
 if __name__ == "__main__":
@@ -90,4 +101,4 @@ if __name__ == "__main__":
             else:
                 print("Recipe creation failed or returned empty result.")
         else:
-            main(choice)
+            print(main(choice))

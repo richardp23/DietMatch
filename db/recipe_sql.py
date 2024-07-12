@@ -81,21 +81,15 @@ def lookup_prev_recipe():
                 original_id, original_name, alt_name = recipe
                 alt_name = alt_name if alt_name else "No alternative recipe found"
                 print(f"{original_id}. {original_name} (Alternative Recipe: {alt_name})")
-            return True
+            return True, recipes
         else:
             print("\nNo recipes found.")
-            return False
+            return False, None
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
-        return False
+        return False, None
 
-def select_recipe():
-    try:
-        recipe_id = int(input("Enter the ID of the recipe you want to view: "))
-    except ValueError:
-        print("Invalid input. Please enter a number.")
-        return
-
+def select_recipe(recipe_id):
     try:
         with sqlite3.connect('recipes.db') as connection:
             cursor = connection.cursor()
@@ -123,10 +117,7 @@ def select_recipe():
             print("\nOriginal recipe not found.")
 
         if alt_recipe:
-            print("\nAlternative Recipe:")
-            print(f"Name: {alt_recipe[0]}")
-            print(f"Ingredients: {alt_recipe[1]}")
-            print(f"Instructions: {alt_recipe[2]}")
+            return f"\nAlternative Recipe:\nName: {alt_recipe[0]}\Ingredients: {alt_recipe[1]}\nInstructions: {alt_recipe[2]}"
         else:
             print("\nAlternative recipe not found.")
     except sqlite3.Error as e:

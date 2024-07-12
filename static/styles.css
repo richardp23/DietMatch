@@ -291,14 +291,23 @@ form button {
     font-size: 36px;
 }
 
-.recipe-container {
-    width: 60%;
+.recipe-containers-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.recipe-list-container {
+    margin-right: 50px;
+}
+
+.recipe-list-container, .recipe-view-container {
+    width: 40vw;
     height: 60vh; /* This will make it 60% of the viewport height */
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-
-
-
+.recipe-item:hover {
+    background-color: gray;
+}

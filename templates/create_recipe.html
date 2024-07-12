@@ -37,7 +37,7 @@
                 <h2>New Recipe</h2>
                 <div id="generated-recipe">
                     {% if generated_recipe %}
-                    <p>{{ generated_recipe }}</p>
+                    <p>{{ generated_recipe | replace("\n", "<br>" | safe ) }}</p>
                     {% else %}
                     <p>Your generated recipe will appear here.</p>
                     {% endif %}
