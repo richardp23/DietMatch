@@ -19,7 +19,7 @@
         <div class="content-wrapper">
             <section class="recipe-creation">
                 <h1>Create Your Recipe</h1>
-                <form id="recipe-form">
+                <form id="recipe-form" method="POST" action="/create-recipe">
                     <div class="form-group">
                         <label for="diet-preference">Enter preferred diet:</label>
                         <input type="text" id="diet-preference" name="diet-preference" placeholder="e.g., vegan, vegetarian">
@@ -36,7 +36,11 @@
             <section class="recipe-result">
                 <h2>New Recipe</h2>
                 <div id="generated-recipe">
+                    {% if generated_recipe %}
+                    <p>{{ generated_recipe }}</p>
+                    {% else %}
                     <p>Your generated recipe will appear here.</p>
+                    {% endif %}
                 </div>
             </section>
         </div>

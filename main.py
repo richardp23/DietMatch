@@ -3,6 +3,7 @@ import sqlite3
 import os
 
 from dotenv import load_dotenv
+
 from api_integration.edamam_integration import get_recipe
 from api_integration.openai_integration import alt_recipe_query
 from db.recipe_sql import (create_tables, store_original_recipe, store_alt_recipe, lookup_prev_recipe, select_recipe, reset_database)
@@ -14,35 +15,21 @@ EDAMAM_APP_KEY = os.getenv('EDAMAM_APP_KEY')
 OPENAI_KEY = os.getenv('OPENAI_KEY')
 
 
-def main():
-    print("Welcome to DietMatch!")
-
-    while True:
-        print("What would you like to do?")
-
-        choice = input(
-            "Type \"make\" to make a recipe,"
-            " \"lookup\" to find a previously made recipe,"
-            " \"exit\" to quit the program,"
-            " or \"reset\" to clear database! "
-        )
-
-        if choice.lower() == "reset":
-            reset_database()
-        elif choice.lower() == "make":
-            make_recipe()
-        elif choice.lower() == "lookup":
-            lookup_db()
-        elif choice.lower() == "exit":
-            exit()
-        else:
-            print("Choice not valid, please try again!\n")
+def main(action, *args):
+    create_tables()
+    if action.lower() == "reset":
+        reset_database()
+    elif action.lower() == "make":
+        return make_recipe(args[0], args[1])
+    elif action.lower() == "lookup":
+        lookup_db()
+    elif action.lower() == "exit":
+        exit()
+    else:
+        print("Choice not valid, please try again!\n")
 
 
-def make_recipe():
-    diet = input("\nPlease tell me what kind of diet you follow: ")
-    requested_recipe = input("Please tell me what kind of dish you would like to make: ")
-
+def make_recipe(diet, requested_recipe):
     recipe_query = get_recipe(EDAMAM_APP_ID, EDAMAM_APP_KEY, requested_recipe)
     original_name = recipe_query['name']
     ingredients = []
@@ -59,7 +46,8 @@ def make_recipe():
     original_recipe_id = lookup_original_recipe_id(original_name, ingredients, recipe_link)
     store_alt_recipe(original_recipe_id, alt_name, alt_ingredients, alt_instructions)
 
-    print(f"\nAlternative Recipe: {alt_name}\nIngredients: {', '.join(alt_ingredients)}\nInstructions: {alt_instructions}\n")
+    return f"\nAlternative Recipe: {alt_name}\nIngredients: {', '.join(alt_ingredients)}\nInstructions: {alt_instructions}\n"
+    # print(f"\nAlternative Recipe: {alt_name}\nIngredients: {', '.join(alt_ingredients)}\nInstructions: {alt_instructions}\n")
 
 
 def lookup_original_recipe_id(name, ingredients, recipe_link):
@@ -81,5 +69,25 @@ def lookup_db():
     
 
 if __name__ == "__main__":
-    create_tables()
-    main()
+    print("Welcome to DietMatch!")
+
+    while True:
+        print("What would you like to do?")
+
+        choice = input(
+            "Type \"make\" to make a recipe,"
+            " \"lookup\" to find a previously made recipe,"
+            " \"exit\" to quit the program,"
+            " or \"reset\" to clear database! "
+        )
+
+        if choice == "make":
+            diet = input("\nPlease tell me what kind of diet you follow: ")
+            requested_recipe = input("Please tell me what kind of dish you would like to make: ")
+            result = main(choice, diet, requested_recipe)
+            if result:
+                print(result)
+            else:
+                print("Recipe creation failed or returned empty result.")
+        else:
+            main(choice)
