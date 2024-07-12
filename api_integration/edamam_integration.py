@@ -11,9 +11,7 @@ def get_recipe(app_id, app_key, dish):
         'app_id': app_id,
         'app_key': app_key,
     })
-    
-    auth_response.raise_for_status() 
-
+    auth_response.raise_for_status()
 
     data = auth_response.json()
 
@@ -32,4 +30,3 @@ def get_recipe(app_id, app_key, dish):
         return recipe_details
     else:
         return None
-

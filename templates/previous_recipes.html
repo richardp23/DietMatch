@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Recipes - Diet Match</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Diet Match</div>
+        <nav>
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+            <a href="#" class="contact-us">Contact Us</a>
+        </nav>
+    </header>
+    <main class="previous-recipes-main">
+        <h1>Previous Recipes</h1>
+        <div class="recipe-containers-wrapper">
+            <div class="recipe-list-container">
+                {% if recipes %}
+                {% for recipe in recipes %}
+                    <div class="recipe-item" data-id="{{ recipe[0] }}">
+                        <p>{{ recipe[0] }}. {{ recipe[1] }}</p>
+                        <p><em>Alternative Recipe:</em> {{ recipe[2] if recipe[2] else "No alternative recipe found" }}</p>
+                    </div>
+                {% endfor %}
+                {% else %}
+                    <p>No recipes found.</p>
+                {% endif %}
+            </div>
+            <div class="recipe-view-container">
+            </div>
+        </div>
+        <script>
+            // Add click event listener to all recipe-item elements
+            document.querySelectorAll('.recipe-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const recipeId = this.getAttribute('data-id');
+                    // Send POST request with recipeId to the backend
+                    fetch('/previous-recipes', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ recipeId: recipeId }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        // Update the recipe-view-container with the new recipe
+                        document.querySelector('.recipe-view-container').innerHTML = `<p>${data.show_recipe.replace(/\n/g, '<br>')}}</p>`;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            });
+        </script>
+    </main>
+</body>
+</html>
