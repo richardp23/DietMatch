@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 from api_integration.edamam_integration import get_recipe
 from api_integration.openai_integration import alt_recipe_query
 from db.recipe_sql import (create_tables, store_original_recipe,
-                           store_alt_recipe, lookup_prev_recipe,
-                           select_recipe, reset_database)
+                           store_alt_recipe, lookup_original_recipe_id,
+                           lookup_prev_recipe, select_recipe,
+                           reset_database)
 
 # Importing env variables for API authentication
 load_dotenv()
@@ -18,9 +19,8 @@ OPENAI_KEY = os.getenv('OPENAI_KEY')
 
 
 def main(action, *args):
-    create_tables()
     if action.lower() == "reset":
-        reset_database()
+        return reset_database()
     elif action.lower() == "make":
         return make_recipe(args[0], args[1])
     elif action.lower() == "lookup":
@@ -28,7 +28,7 @@ def main(action, *args):
     elif action.lower() == "exit":
         exit()
     else:
-        print("Choice not valid, please try again!\n")
+        return "Choice not valid, please try again!\n"
 
 
 def make_recipe(diet, requested_recipe):
@@ -58,22 +58,6 @@ def make_recipe(diet, requested_recipe):
       )
 
 
-def lookup_original_recipe_id(name, ingredients, recipe_link):
-    ingredients_str = ', '.join(ingredients)
-
-    with sqlite3.connect('recipes.db') as connection:
-        cursor = connection.cursor()
-        cursor.execute(
-            'SELECT id FROM original_recipes WHERE name = ?'
-            ' AND ingredients = ? AND recipe_link = ?',
-            (name, ingredients_str, recipe_link))
-        row = cursor.fetchone()
-        if row:
-            return row[0]
-        else:
-            raise ValueError("Original recipe not found in the database.")
-
-
 def lookup_db(recipe_id=None):
     if recipe_id:
         return select_recipe(recipe_id)
@@ -93,6 +77,7 @@ def lookup_db(recipe_id=None):
 
 
 if __name__ == "__main__":
+    create_tables()
     print("Welcome to DietMatch!")
 
     while True:

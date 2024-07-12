@@ -75,6 +75,22 @@ def store_alt_recipe(original_recipe_id, name, ingredients, instructions):
                         instructions=instructions)
 
 
+def lookup_original_recipe_id(name, ingredients, recipe_link):
+    ingredients_str = ', '.join(ingredients)
+
+    with sqlite3.connect('recipes.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(
+            'SELECT id FROM original_recipes WHERE name = ?'
+            ' AND ingredients = ? AND recipe_link = ?',
+            (name, ingredients_str, recipe_link))
+        row = cursor.fetchone()
+        if row:
+            return row[0]
+        else:
+            raise ValueError("Original recipe not found in the database.")
+
+
 def lookup_prev_recipe():
     try:
         with sqlite3.connect('recipes.db') as connection:
@@ -154,9 +170,9 @@ def reset_database():
             cursor.execute('DROP TABLE IF EXISTS alt_recipes')
             cursor.execute('DROP TABLE IF EXISTS original_recipes')
             create_tables()
-        print("Database reset successfully")
+        return "Database reset successfully"
     except sqlite3.Error as e:
-        print(f"An error occurred: {e}")
+        return f"An error occurred: {e}"
 
 
 # Main execution
